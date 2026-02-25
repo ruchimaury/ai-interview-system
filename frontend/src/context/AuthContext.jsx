@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API = 'http://localhost:8000/api';
+const API = 'https://ai-interview-system-2.onrender.com/api';
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
