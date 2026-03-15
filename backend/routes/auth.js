@@ -133,4 +133,19 @@ router.post('/create-admin', async (req, res) => {
   }
 });
 
+// One-time admin setup route
+router.post('/setup-admin', async (req, res) => {
+  try {
+    const User = require('../models/User');
+    const bcrypt = require('bcryptjs');
+    const existing = await User.findOne({ email: 'admin@company.com' });
+    if (existing) return res.json({ message: 'Admin already exists!' });
+    const hash = await bcrypt.hash('admin123', 10);
+    await User.create({ name: 'HR Admin', email: 'admin@company.com', password: hash, role: 'admin' });
+    res.json({ message: 'Admin created successfully!' });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+});
+
 module.exports = router;
